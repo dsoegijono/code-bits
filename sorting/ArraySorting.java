@@ -21,11 +21,13 @@ public class ArraySorting {
     do {
       swapped = false;
       for (int i = 1; i < len; i++) {
+        System.out.println(arrayToString(arr, " ", i));
         if (arr[i-1] > arr[i]) {
           swap(arr, i-1, i);
           swapped = true;
         }
       }
+      len--;
     } while (swapped == true);
 
     return arr;
@@ -50,7 +52,7 @@ public class ArraySorting {
     int sorted = 1;
     while (sorted < arr.length) {
       for (int i = sorted; i > 0; i--) {
-        printArray(arr);
+        System.out.println(arrayToString(arr, " ", i));
         if (arr[i] < arr[i-1]) {
           swap(arr, i, i-1);
         } else {
@@ -64,12 +66,13 @@ public class ArraySorting {
 
   public static void main(String[] args) {
     int[] arr = { 10, 1, 23, 9, 19, 30, 24, -15 };
-    printArray(arr);
+    System.out.println("Original array: " + arrayToString(arr));
     //TODO: User input for array?
 
     System.out.println("Please select a sort algorithm:");
     System.out.println(" 1. Bubble Sort");
     System.out.println(" 2. Insertion Sort");
+    System.out.print(">>> ");
 
     Scanner reader = new Scanner(System.in);
     int x = reader.nextInt();
@@ -78,25 +81,30 @@ public class ArraySorting {
     switch (x) {
       case 1:
         System.out.println("Performing bubble sort...");
-        printArray(bubbleSort(arr));
+        System.out.println("Sorted array: " + arrayToString(bubbleSort(arr)));
         break;
       case 2:
         System.out.println("Performing insertion sort...");
-        printArray(insertionSort(arr));
+        System.out.println("Sorted array: " + arrayToString(insertionSort(arr)));
         break;
       default:
         System.out.println("Error. Invalid selection.");
     }
   }
 
-  private static void printArray(int[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      System.out.print(arr[i] + " ");
-    }
-    System.out.println();
+  private static String arrayToString(int[] arr) {
+    return arrayToString(arr, " ", -1);
   }
 
-  public static int[] swap(int[] arr, int i, int j) {
+  private static String arrayToString(int[] arr, String delimiter, int highlightIndex) {
+    String ret = "";
+    for (int i = 0; i < arr.length; i++) {
+      ret += (i == highlightIndex) ? ("[" + arr[i] + "]" + delimiter) : (arr[i] + delimiter);
+    }
+    return ret;
+  }
+
+  private static int[] swap(int[] arr, int i, int j) {
     int temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
