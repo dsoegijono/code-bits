@@ -3,10 +3,8 @@ import java.util.Scanner;
 public class ArraySorting {
 
 // Bucket sort
-// Selection sort
 // Heapsort
 // Mergesort
-
 // quicksort
 
   /**
@@ -14,7 +12,7 @@ public class ArraySorting {
    * Time complexity: Best case = O(n). Average case = O(n^2). Worst case = O(n^2).
    * Space complexity: O(1).
    */
-  public static int[] bubbleSort(int[] arr) {
+  private static int[] bubbleSort(int[] arr) {
     int len = arr.length;
     boolean swapped = false;
 
@@ -64,14 +62,37 @@ public class ArraySorting {
     return arr;
   }
 
+  /**
+   * Selection Sort
+   * Time complexity: O(n^2)
+   * Space complexity: O(1)
+   */
+  private static int[] selectionSort(int[] arr) {
+    int minIndex = 0;
+    int sorted = 0;
+    while (sorted < arr.length) {
+      for (int i = sorted; i < arr.length; i++) {
+        if (arr[i] < arr[minIndex]) {
+          minIndex = i;
+        }
+      }
+      swap(arr, sorted, minIndex);
+      System.out.println(arrayToString(arr, " ", sorted));
+      sorted++;
+      minIndex = sorted;
+    }
+    return arr;
+  }
+
   public static void main(String[] args) {
-    int[] arr = { 10, 1, 23, 9, 19, 30, 24, -15 };
+    int[] arr = { 10, 1, 23, 9, 19, 3, 24, -15 };
     System.out.println("Original array: " + arrayToString(arr));
     //TODO: User input for array?
 
     System.out.println("Please select a sort algorithm:");
     System.out.println(" 1. Bubble Sort");
     System.out.println(" 2. Insertion Sort");
+    System.out.println(" 3. Selection Sort");
     System.out.print(">>> ");
 
     Scanner reader = new Scanner(System.in);
@@ -86,6 +107,10 @@ public class ArraySorting {
       case 2:
         System.out.println("Performing insertion sort...");
         System.out.println("Sorted array: " + arrayToString(insertionSort(arr)));
+        break;
+      case 3:
+        System.out.println("Performing selection sort...");
+        System.out.println("Sorted array: " + arrayToString(selectionSort(arr)));
         break;
       default:
         System.out.println("Error. Invalid selection.");
