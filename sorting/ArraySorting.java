@@ -5,7 +5,6 @@ public class ArraySorting {
 // Bucket sort
 // Heapsort
 // Mergesort
-// quicksort
 
   /**
    * Bubble Sort
@@ -63,6 +62,28 @@ public class ArraySorting {
   }
 
   /**
+   * Quicksort
+   * Time complexity: O(n log(n)). Worst: O(n^2)
+   * Space complexity: O(n)
+   */
+  private static int[] quicksort(int[] arr) {
+    return quicksort(arr, 0, arr.length - 1);
+  }
+
+  private static int[] quicksort(int[] arr, int min, int max) {
+    int iLeft = min, iRight = max;
+    int pivot = partition(arr, min, max);
+    // System.out.println(arrayToString(arr, " ", pivot)); //TODO needs steps
+    if (min < pivot - 1) {
+      quicksort(arr, min, pivot - 1);
+    }
+    if (pivot < max) {
+      quicksort(arr, pivot, max);
+    }
+    return arr;
+  }
+
+  /**
    * Selection Sort
    * Time complexity: O(n^2)
    * Space complexity: O(1)
@@ -85,7 +106,7 @@ public class ArraySorting {
   }
 
   public static void main(String[] args) {
-    int[] arr = { 10, 1, 23, 9, 19, 3, 24, -15 };
+    int[] arr = { 10, 1, 23, 9, 19, -3, 24, 15, 0 };
     System.out.println("Original array: " + arrayToString(arr));
     //TODO: User input for array?
 
@@ -93,6 +114,7 @@ public class ArraySorting {
     System.out.println(" 1. Bubble Sort");
     System.out.println(" 2. Insertion Sort");
     System.out.println(" 3. Selection Sort");
+    System.out.println(" 4. Quicksort");
     System.out.print(">>> ");
 
     Scanner reader = new Scanner(System.in);
@@ -111,6 +133,10 @@ public class ArraySorting {
       case 3:
         System.out.println("Performing selection sort...");
         System.out.println("Sorted array: " + arrayToString(selectionSort(arr)));
+        break;
+      case 4:
+        System.out.println("Performing quicksort...");
+        System.out.println("Sorted array: " + arrayToString(quicksort(arr)));
         break;
       default:
         System.out.println("Error. Invalid selection.");
@@ -134,5 +160,25 @@ public class ArraySorting {
     arr[i] = arr[j];
     arr[j] = temp;
     return arr;
+  }
+
+  private static int partition(int[] arr, int min, int max) {
+    int iLeft = min, iRight = max;
+    int pivot = arr[(iLeft + iRight) / 2];
+
+    while (iLeft <= iRight) {
+      while (arr[iLeft] < pivot) {
+        iLeft++;
+      }
+      while (arr[iRight] > pivot) {
+        iRight--;
+      }
+      if (iLeft <= iRight) {
+        swap(arr, iLeft, iRight);
+        iLeft++;
+        iRight--;
+      }
+    }
+    return iLeft;
   }
 }
